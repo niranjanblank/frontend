@@ -8,28 +8,28 @@ const RestaurantList = () => {
             <Typography textAlign={"center"}>Choose Restaurant to order</Typography>
             <Grid container spacing={3} >
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={1}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={2}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={3}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={4}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={5}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={6}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={7}/>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <SingleRestaurant/>
+                    <SingleRestaurant id={8}/>
                 </Grid>
             </Grid>
             
