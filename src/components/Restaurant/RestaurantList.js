@@ -1,8 +1,16 @@
 import { Container, Grid, Typography } from "@mui/material"
 import { Box } from "@mui/system"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { fetchAllRestaurant } from "../../store/restaurantSlice"
 import SingleRestaurant from "./SingleRestaurant"
 
 const RestaurantList = () => {
+
+    const dispatch = useDispatch()
+    useEffect(()=> {
+        dispatch(fetchAllRestaurant())
+    },[])
     return (
         <Container sx={{paddingTop:'20px'}}>
             <Typography textAlign={"center"}>Choose Restaurant to order</Typography>

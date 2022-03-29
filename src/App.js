@@ -1,4 +1,6 @@
 import { Box } from "@mui/system";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLogin from "./components/Login/UserLogin";
 import Navbar from "./components/Navbar/Navbar";
@@ -6,10 +8,11 @@ import FoodList from "./components/Restaurant/Food/FoodList";
 import RestaurantDetails from "./components/Restaurant/RestaurantDetails";
 import RestaurantList from "./components/Restaurant/RestaurantList";
 import SignUp from "./components/SignUp/SignUp";
+import { fetchAllRestaurant } from "./store/asyncActions";
 
 
 function App() {
-  
+ 
   return (
     <Box>
       <BrowserRouter>
