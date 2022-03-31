@@ -1,8 +1,40 @@
 import { Button, Stack, TextField, Typography } from "@mui/material"
-
+import { useState } from "react"
+import axios from "axios"
 const { Box } = require("@mui/system")
 
 const SignUp = () => {
+    const [firstName,setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+
+    const onChangeHandler = (event,field)=> {
+        if(field==='firstName'){
+            setFirstName(event.target.value)
+        }
+        else if(field==='lastName'){
+            setLastName(event.target.value)
+        }
+        else if(field==='email'){
+            setEmail(event.target.value)
+        }
+        else if(field==='password'){
+            setPassword(event.target.value)
+        }
+    }
+
+    const onSignUpHandler = async () => {
+        const signUpData = {
+            email: email, 
+            password: password, 
+            lastName: lastName, 
+            firstName: firstName
+        }
+        const userData =  await axios.post('http://localhost:5000/api/user/signup',signUpData)
+        console.log('sign up', userData)
+    }
+
     return (
         <Box sx={{height:'100vh', width:'100vw',display:'flex',alignItems:'center',justifyContent:'center'}}>
         <Stack spacing={2} sx={{width:'400px'}} >
@@ -11,11 +43,11 @@ const SignUp = () => {
                 </Box>
             <Typography sx={{textAlign: 'center'}}variant="h3" > Sign Up</Typography>
             
-            <TextField label="First name"></TextField>
-            <TextField label="Last name"></TextField>
-            <TextField label="Email"></TextField>
-            <TextField label="Password" ></TextField>
-            <Button variant="contained" >Sign Up</Button>
+            <TextField label="First name" onChange={(event)=> {onChangeHandler(event,'firstName')}}></TextField>
+            <TextField label="Last name" onChange={(event)=> {onChangeHandler(event,'lastName')}}></TextField>
+            <TextField label="Email" onChange={(event)=> {onChangeHandler(event,'email')}}></TextField>
+            <TextField label="Password" onChange={(event)=> {onChangeHandler(event,'password')}}></TextField>
+            <Button variant="contained" onClick={onSignUpHandler} >Sign Up</Button>
         </Stack>
     </Box>
     )
