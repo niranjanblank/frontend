@@ -32,7 +32,7 @@ const Navbar = () => {
     return (
         <>
         {isLogged?(  <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="relative" sx={{zIndex:1400, backgroundColor:'black'}} > 
+            <AppBar position="fixed" sx={{zIndex:1400, backgroundColor:'black', height: '60px'}} > 
                 <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Foodie

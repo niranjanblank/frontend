@@ -1,19 +1,28 @@
-import { Button, CssBaseline, Dialog, Divider, Drawer, Fab, Stack, TextField, Typography } from "@mui/material"
+import { Button, CssBaseline, Dialog, Divider, Drawer, Stack, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import SingleReview from "./SingleReview"
-import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 
 import {useParams, Link} from "react-router-dom"
+import FoodList from "./Food/FoodList";
+import ReviewList from "./Review/ReviewList";
 const RestaurantDetails = () => {
 
+ 
+    
     const [openDialog,setOpenDialog] = useState(false)
+    const [menuSelector,setMenuSelector] = useState('reviews')
 
     let params = useParams()
 
     const dialogHandler= () => {
         setOpenDialog(!openDialog)
     }
+
+
+    
+    
+
     // console.log(process.env.PUBLIC_URL+'assets/'+'restaurants/'+params.restaurantID+'.png')
     return (
         <>
@@ -41,30 +50,19 @@ const RestaurantDetails = () => {
                         <Typography>Some Address</Typography>
                         <Typography sx={{textAlign:'justify', padding:'10px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Typography>
                     </Box>
-                    <Button sx={{width:'100%'}} variant="contained" component={Link} to="/foods">Choose Food</Button>
+                    <Button sx={{width:'100%', borderRadius:'0px'}} variant={(menuSelector==='food')?'contained':'outlined'} onClick={()=> {setMenuSelector('food')}} >Choose Food</Button>
+                    <Button sx={{width:'100%', borderRadius:'0px'}} variant={(menuSelector==='reviews')?'contained':'outlined'} onClick={()=> {setMenuSelector('reviews')}}>See Reviews</Button>
+
                 </Box>
             </Drawer>
             
-            {/* Reviews */}
-            <Box sx={{ flexGrow: 1}} component="main" >
-                
-                <Stack sx={{width:'100%'}} spacing={2}>
-                    <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', paddingY:'5px'}}>
-                    <Typography sx={{textAlign:'center'}} variant="h3"> Reviews</Typography>
-                    <Fab sx={{marginLeft:'20px'}} color="primary" size="small" onClick={dialogHandler}>
-                            <AddIcon />
-                        </Fab>
-                    </Box>
-                    
-                    <Divider/>
-                    <Stack sx={{paddingX:'10px'}} spacing={2}>
-                        <SingleReview/>
-                        <SingleReview/>
-                        <SingleReview/>
-                        <SingleReview/>
-
-                    </Stack>
-                </Stack>
+            {/* Reviews or food item */}
+            <Box sx={{marginTop:'60px', width:'100%'}}>
+            {(menuSelector==='reviews')?
+            <ReviewList dialogHandler={dialogHandler}/>:
+            <FoodList/>}
+            {/* <ReviewList dialogHandler={dialogHandler}/> */}
+            
             </Box>
         </Box>
 

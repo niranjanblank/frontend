@@ -16,7 +16,7 @@ const RestaurantList = () => {
     const restaurantData = useSelector(state=> state.restaurants.data)
    
     return (
-        <Container sx={{paddingTop:'20px'}}>
+        <Container sx={{paddingTop:'20px', marginTop:'60px'}}>
             <Typography textAlign={"center"}>Choose Restaurant to order</Typography>
             
             <Grid container spacing={3} >
