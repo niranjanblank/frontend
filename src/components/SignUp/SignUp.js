@@ -46,7 +46,7 @@ const SignUp = () => {
             <TextField label="First name" onChange={(event)=> {onChangeHandler(event,'firstName')}}></TextField>
             <TextField label="Last name" onChange={(event)=> {onChangeHandler(event,'lastName')}}></TextField>
             <TextField label="Email" onChange={(event)=> {onChangeHandler(event,'email')}}></TextField>
-            <TextField label="Password" onChange={(event)=> {onChangeHandler(event,'password')}}></TextField>
+            <TextField type="password" label="Password" onChange={(event)=> {onChangeHandler(event,'password')}}></TextField>
             <Button variant="contained" onClick={onSignUpHandler} >Sign Up</Button>
         </Stack>
     </Box>

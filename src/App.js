@@ -8,7 +8,6 @@ import FoodList from "./components/Restaurant/Food/FoodList";
 import RestaurantDetails from "./components/Restaurant/RestaurantDetails";
 import RestaurantList from "./components/Restaurant/RestaurantList";
 import SignUp from "./components/SignUp/SignUp";
-import { fetchAllRestaurant } from "./store/asyncActions";
 
 
 function App() {
