@@ -1,11 +1,13 @@
 import { Button, Stack, TextField, Typography } from "@mui/material"
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
 import {Link, useNavigate} from "react-router-dom"
 
 const { Box } = require("@mui/system")
 
 const UserLogin = () => {
+    const [cookies, setCookie] = useCookies(['user']);
 
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -20,6 +22,23 @@ const UserLogin = () => {
         }
     }
 
+    useEffect(()=>{
+      const login = async () => {
+        if(cookies.email && cookies.password){
+          const loginData = {
+            email: cookies.email,
+            password: cookies.password
+          }
+          const {data} = await axios.post('http://localhost:5000/api/user/login',loginData)
+          
+          if(data.data===true){
+           
+              navigate("/restaurants")
+          }
+        }
+      }
+       login()
+    },[])
     const onLoginHandler = async () => {
         const loginData = {
             email: email,
@@ -28,6 +47,8 @@ const UserLogin = () => {
         const {data} = await axios.post('http://localhost:5000/api/user/login',loginData)
         
         if(data.data===true){
+            setCookie('email', email, { path: '/' });
+            setCookie('password', password, { path: '/' });
             navigate("/restaurants")
         }
         console.log(data)

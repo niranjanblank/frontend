@@ -6,11 +6,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useLocation} from "react-router-dom"
+import {useLocation, useNavigate} from "react-router-dom"
 import {Link} from "react-router-dom"
+import { useCookies } from 'react-cookie';
 const Navbar = () => {
     const location = useLocation()
     const [isLogged,setIsLogged] = React.useState(false)
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    let navigate= useNavigate()
     React.useEffect(()=>{
         
         if(location.pathname=="/" || location.pathname=="/signup"){
@@ -21,7 +24,11 @@ const Navbar = () => {
         )
     },[location])
     
-    
+    const onLogoutHandler = () => {
+        removeCookie('email')
+        removeCookie('password')
+        navigate("/")
+    }
     return (
         <>
         {isLogged?(  <Box sx={{ flexGrow: 1 }}>
@@ -30,7 +37,7 @@ const Navbar = () => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Foodie
                 </Typography>
-                <Button color="inherit" component={Link} to="/" >Log Out</Button>
+                <Button color="inherit" onClick={onLogoutHandler}>Log Out</Button>
                 </Toolbar>
             </AppBar>
             </Box>):''}
