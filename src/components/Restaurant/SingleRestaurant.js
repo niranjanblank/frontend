@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material"
 import {Link} from "react-router-dom"
-const SingleRestaurant = ({id}) => {
+const SingleRestaurant = ({data}) => {
     return (
        <>   
          <Box sx={{display:"flex",flexDirection:'column'
@@ -12,10 +12,10 @@ const SingleRestaurant = ({id}) => {
      
         }}
         component={Link}
-        to={`/restaurants/${id}`}
+        to={`/restaurants/${data.id}`}
         >
-            <img src={process.env.PUBLIC_URL+'/assets/restaurants/'+id+'.png'} height="200px" widht="150px"/>
-            <Typography sx={{textAlign:'center', color:'black'}}>Some Restaurant</Typography>
+            <img src={data.image} height="200px" widht="150px"/>
+            <Typography sx={{textAlign:'center', color:'black'}}>{data.name}</Typography>
             </Box>
         </>
     )
