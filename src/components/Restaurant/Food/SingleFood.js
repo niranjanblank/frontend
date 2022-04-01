@@ -1,6 +1,15 @@
 import { Box, Button, Typography } from "@mui/material"
+import { useDispatch } from "react-redux"
+import { addSingleItemToCart } from "../../../store/cartSlice"
 
-const SingleFood = ({id}) => {
+const SingleFood = ({food}) => {
+
+    const dispatch = useDispatch()
+
+    const addToCartHandler = () => {
+        dispatch(addSingleItemToCart(food))
+    }
+
     return (
        <>   
          <Box sx={{display:"flex",flexDirection:'column'
@@ -9,9 +18,9 @@ const SingleFood = ({id}) => {
         alignItems:'center',
         margin: '10px'
         }}>
-            <img src={process.env.PUBLIC_URL+'/assets/'+'foods/'+id+'.png'} height="200px" width="200px"/>
-            <Typography sx={{textAlign:'center'}}>Some Food</Typography>
-            <Button variant="contained">Order</Button>
+            <img src={process.env.PUBLIC_URL+'/assets/'+'foods/'+food.id+'.png'} height="200px" width="200px"/>
+            <Typography sx={{textAlign:'center'}}>{food.foodName}</Typography>
+            <Button variant="contained" onClick={addToCartHandler}>Add to Cart</Button>
             </Box>
         </>
     )

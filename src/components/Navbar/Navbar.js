@@ -9,10 +9,27 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useLocation, useNavigate} from "react-router-dom"
 import {Link} from "react-router-dom"
 import { useCookies } from 'react-cookie';
+import { Dialog, Slide } from '@mui/material';
+import Cart from '../Cart/Cart';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+
 const Navbar = () => {
     const location = useLocation()
     const [isLogged,setIsLogged] = React.useState(false)
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const [openCart, setOpenCart] = React.useState(false);
+
+    const handleClickOpenCart = () => {
+        setOpenCart(true);
+    };
+
+    const handleCloseCart = () => {
+        setOpenCart(false);
+    };
     let navigate= useNavigate()
     React.useEffect(()=>{
         
@@ -31,16 +48,34 @@ const Navbar = () => {
     }
     return (
         <>
-        {isLogged?(  <Box sx={{ flexGrow: 1 }}>
+        {isLogged?( <> <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{zIndex:1400, backgroundColor:'black', height: '60px'}} > 
                 <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
                     <Typography sx={{textDecoration: 'none', color:'white'}} variant="h6" component={Link} to="/restaurants">
                         Foodie
                     </Typography>
+                    <Box>
+                    <Button color="inherit" onClick={handleClickOpenCart}>Cart</Button>
+
                     <Button color="inherit" onClick={onLogoutHandler}>Log Out</Button>
+
+                    </Box>
                 </Toolbar>
             </AppBar>
-            </Box>):''}
+            </Box>
+            <Dialog
+              fullScreen
+              open={openCart}
+              onClose={handleCloseCart}
+              TransitionComponent={Transition}
+            >
+                <Cart handleClose={handleCloseCart}/>
+            </Dialog>
+            </>
+            )
+            
+            :''}
+            
         </>
   
     )

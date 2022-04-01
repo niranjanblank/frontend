@@ -23,7 +23,7 @@ const FoodList = ({restaurant_id}) => {
                         <Grid  container spacing={3} >
                            {foodDataCurrent.map(food=> (
                                <Grid key={`restro-${food.restaurant_id}-${food.id}`} item xs={6} md={4}>
-                                 <SingleFood id={food.id}/>
+                                 <SingleFood food={food}/>
                                  </Grid>
                            ))}
                           
