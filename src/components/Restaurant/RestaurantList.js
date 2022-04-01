@@ -2,7 +2,7 @@ import { Container, Grid, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getAllData } from "../../store/asyncActions"
+import { getAllFoodItemData, getAllRestaurantData } from "../../store/asyncActions"
 import { fetchAllRestaurant } from "../../store/restaurantSlice"
 import SingleRestaurant from "./SingleRestaurant"
 
@@ -11,7 +11,8 @@ const RestaurantList = () => {
     const dispatch = useDispatch()
     useEffect(()=> {
         // dispatch(fetchAllRestaurant())
-        dispatch(getAllData())
+        dispatch(getAllRestaurantData())
+        dispatch(getAllFoodItemData())
     },[])
     const restaurantData = useSelector(state=> state.restaurants.data)
    

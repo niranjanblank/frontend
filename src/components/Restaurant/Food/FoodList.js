@@ -1,13 +1,15 @@
 import { Container, Divider, Grid, Stack, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import SingleFood from "./SingleFood"
+import {useSelector} from "react-redux"
 
+const FoodList = ({restaurant_id}) => {
 
-const FoodList = () => {
+   const foodDataAll = useSelector(state=>state.foodItems.data)
+   const foodDataCurrent = foodDataAll.filter(food =>  restaurant_id==food.restaurant_id)
+   console.log(foodDataCurrent)
     return (
-        
-            
-          
+
               <Box sx={{ flexGrow: 1}} component="main" >
                  <Stack spacing={2}>
 
@@ -17,31 +19,14 @@ const FoodList = () => {
                      </Box>
                      <Divider/>
                      <Box sx={{paddingLeft: '40px'}}>
+
                         <Grid  container spacing={3} >
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={1}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={2}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={3}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={4}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={5}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={6}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={7}/>
-                           </Grid>
-                           <Grid item xs={6} md={4}>
-                              <SingleFood id={8}/>
-                           </Grid>
+                           {foodDataCurrent.map(food=> (
+                               <Grid key={`restro-${food.restaurant_id}-${food.id}`} item xs={6} md={4}>
+                                 <SingleFood id={food.id}/>
+                                 </Grid>
+                           ))}
+                          
                         </Grid>
                      </Box>
                      </Stack>

@@ -25,19 +25,19 @@ const Navbar = () => {
     },[location])
     
     const onLogoutHandler = () => {
-        removeCookie('email')
-        removeCookie('password')
+        removeCookie('email',{path: "/"})
+        removeCookie('password',{path: "/"})
         navigate("/")
     }
     return (
         <>
         {isLogged?(  <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{zIndex:1400, backgroundColor:'black', height: '60px'}} > 
-                <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Foodie
-                </Typography>
-                <Button color="inherit" onClick={onLogoutHandler}>Log Out</Button>
+                <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
+                    <Typography sx={{textDecoration: 'none', color:'white'}} variant="h6" component={Link} to="/restaurants">
+                        Foodie
+                    </Typography>
+                    <Button color="inherit" onClick={onLogoutHandler}>Log Out</Button>
                 </Toolbar>
             </AppBar>
             </Box>):''}

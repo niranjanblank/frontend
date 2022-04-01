@@ -60,7 +60,7 @@ const RestaurantDetails = () => {
             <Box sx={{marginTop:'60px', width:'100%'}}>
             {(menuSelector==='reviews')?
             <ReviewList dialogHandler={dialogHandler}/>:
-            <FoodList/>}
+            <FoodList restaurant_id={params.restaurantID} />}
             {/* <ReviewList dialogHandler={dialogHandler}/> */}
             
             </Box>
