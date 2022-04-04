@@ -1,9 +1,13 @@
 import { Button, CssBaseline, Dialog, Divider, Drawer, Stack, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
+import axios from "axios";
 
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 
 import {useParams, Link} from "react-router-dom"
+import { addSingleReview } from "../../store/reviewSlice";
 import FoodList from "./Food/FoodList";
 import ReviewList from "./Review/ReviewList";
 const RestaurantDetails = () => {
@@ -12,7 +16,9 @@ const RestaurantDetails = () => {
     
     const [openDialog,setOpenDialog] = useState(false)
     const [menuSelector,setMenuSelector] = useState('reviews')
-
+    const [reviewText, setReviewText] = useState('')
+    const [cookies, setCookie] = useCookies(['user']);
+    const dispatch = useDispatch()
     let params = useParams()
 
     const dialogHandler= () => {
@@ -20,7 +26,29 @@ const RestaurantDetails = () => {
     }
 
 
+    const onSubmitReviewHandler = async () => {
+        const date = new Date()
+
+        const data = {
+            email: cookies.email,
+            restaurantId: parseInt(params.restaurantID),
+            reviewText: reviewText,
+            reviewTime: date.toISOString()
+        }
+
+        try {
+            const reviewData = await axios.post('http://localhost:5000/api/review/addReview',data)
+            dispatch(addSingleReview(reviewData.data))
+            
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
     
+    const onChangeReviewHandler = (event)=> {
+        setReviewText(event.target.value)
+    }
     
 
     // console.log(process.env.PUBLIC_URL+'assets/'+'restaurants/'+params.restaurantID+'.png')
@@ -59,7 +87,7 @@ const RestaurantDetails = () => {
             {/* Reviews or food item */}
             <Box sx={{marginTop:'60px', width:'100%'}}>
             {(menuSelector==='reviews')?
-            <ReviewList dialogHandler={dialogHandler}/>:
+            <ReviewList dialogHandler={dialogHandler} restaurant_id={params.restaurantID}/>:
             <FoodList restaurant_id={params.restaurantID} />}
             {/* <ReviewList dialogHandler={dialogHandler}/> */}
             
@@ -76,13 +104,13 @@ const RestaurantDetails = () => {
                 <Typography sx={{textAlign:'center',marginTop:'10px'}}>Add A Review</Typography>
                 <Divider/>
                 <TextField
-                
                     label="Review"
                     multiline
                     rows={4}
                     placeholder="Enter Your Review"
+                    onChange={onChangeReviewHandler}
                     />
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained" onClick={onSubmitReviewHandler}>Submit</Button>
                 </Stack>
             </Box>
         </Dialog>

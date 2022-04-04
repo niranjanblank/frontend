@@ -2,9 +2,12 @@ import { Box, Divider, Fab, Stack, Typography } from "@mui/material"
 import SingleReview from "./SingleReview"
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
-const ReviewList = ({dialogHandler}) => {
+import { useSelector } from "react-redux";
+const ReviewList = ({dialogHandler, restaurant_id}) => {
 
-  
+    const reviewDataAll = useSelector(state=>state.reviews.data)
+    const reviewDataCurrent = reviewDataAll.filter(review =>  restaurant_id==review.restaurant_id)
+
     return (
         <Box sx={{ flexGrow: 1}} component="main" >
                 
@@ -18,10 +21,11 @@ const ReviewList = ({dialogHandler}) => {
                     
                     <Divider/>
                     <Stack sx={{paddingX:'10px'}} spacing={2}>
-                        <SingleReview/>
-                        <SingleReview/>
-                        <SingleReview/>
-                        <SingleReview/>
+                        {reviewDataCurrent.length===0?"No Reviews Yet": reviewDataCurrent.map(review=> (
+                            
+                            <SingleReview key={`review-${restaurant_id}-review-${review.id}`} review={review}/>
+                        )) }
+    
                     </Stack>
                 </Stack>
             </Box>

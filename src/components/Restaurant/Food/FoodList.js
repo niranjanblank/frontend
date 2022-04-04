@@ -7,7 +7,7 @@ const FoodList = ({restaurant_id}) => {
 
    const foodDataAll = useSelector(state=>state.foodItems.data)
    const foodDataCurrent = foodDataAll.filter(food =>  restaurant_id==food.restaurant_id)
-   console.log(foodDataCurrent)
+
     return (
 
               <Box sx={{ flexGrow: 1}} component="main" >

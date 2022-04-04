@@ -1,14 +1,14 @@
 import { Paper, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 
-const SingleReview = () => {
+const SingleReview = ({review}) => {
     return (
         <Box component={Paper} sx={{padding: '20px'}} variant="outlined">
             <Typography sx={{color:'grey'}} variant="caption"> 
-                March 21, 2022
+                {review.reviewTime}
             </Typography>
             <Typography>
-                This is the best restaurant ever
+                {review.reviewText}
             </Typography>
         </Box>
     )
