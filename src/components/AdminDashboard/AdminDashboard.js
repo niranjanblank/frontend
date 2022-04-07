@@ -45,7 +45,7 @@ const AdminDashboard = () => {
                     <ListItem button component={Link} to="/adminDashboard/fooditems" >
                       <ListItemText primary="Food Items List" />
                     </ListItem>
-                    <ListItem button component={Link} to="/adminDashboard/fooditems" >
+                    <ListItem button component={Link} to="/adminDashboard/addfooditems" >
                       <ListItemText primary="Add Food Item" />
                     </ListItem>
                     <ListItem button  component={Link} to="/adminDashboard/reviews">

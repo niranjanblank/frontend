@@ -11,10 +11,13 @@ const foodItemSlice = createSlice({
     reducers: {
         addAllFoodItems : (state, action)=> {
             state.data = action.payload.data
+        },
+        addSingleFoodItem: (state,action)=> {
+            state.data.push(action.payload.data)
         }
     }
 })
 
-export const {addAllFoodItems} = foodItemSlice.actions
+export const {addAllFoodItems, addSingleFoodItem} = foodItemSlice.actions
 
 export default foodItemSlice.reducer

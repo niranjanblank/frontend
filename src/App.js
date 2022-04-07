@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import AdminAddFoodItem from "./components/AdminDashboard/AdminAddFoodItem";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminFoodItems from "./components/AdminDashboard/AdminFoodItems";
 import AdminRestaurant from "./components/AdminDashboard/AdminRestaurant";
@@ -33,6 +34,8 @@ function App() {
               <Route path="restaurants" element={<AdminRestaurant/>}/>
               <Route path="reviews" element={<AdminReviews/>}/>
               <Route path="fooditems"  element={<AdminFoodItems/>} />
+              <Route path="addfooditems"  element={<AdminAddFoodItem/>} />
+
             </Route>
 
         </Routes>
