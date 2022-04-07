@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material"
+import { Avatar, Box, Typography } from "@mui/material"
 import {Link} from "react-router-dom"
 const SingleRestaurant = ({data}) => {
     return (
@@ -14,7 +14,11 @@ const SingleRestaurant = ({data}) => {
         component={Link}
         to={`/restaurants/${data.id}`}
         >
-            <img src={data.image} height="200px" widht="150px"/>
+            {/* <img src={data.image} height="200px" width="150px"/> */}
+            <Avatar
+                src={data.image}
+                sx={{ width: '200px', height: '200px', border: '3px solid black' }}
+            />
             <Typography sx={{textAlign:'center', color:'black'}}>{data.name}</Typography>
             </Box>
         </>

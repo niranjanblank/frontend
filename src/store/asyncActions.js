@@ -1,4 +1,5 @@
 import axios from "axios"
+import { addAllCartItems } from "./cartSlice"
 import { addAllFoodItems } from "./foodItemSlice"
 import { addAllRestaurants } from "./restaurantSlice"
 import { addAllReviews } from "./reviewSlice"
@@ -23,3 +24,11 @@ export const getAllReviewsData = () => {
         dispatch(addAllReviews(data))
     }
 }   
+
+export const getAllCartData = (email) => {
+    return async dispatch => {
+        const {data} = await axios.post('http://localhost:5000/api/cartitem/getCart',{email: email})
+       
+        dispatch(addAllCartItems(data))
+    }
+}

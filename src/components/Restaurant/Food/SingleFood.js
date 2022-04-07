@@ -18,7 +18,7 @@ const SingleFood = ({food}) => {
         alignItems:'center',
         margin: '10px'
         }}>
-            <img src={process.env.PUBLIC_URL+'/assets/'+'foods/'+food.id+'.png'} height="200px" width="200px"/>
+            <img src={food.image} height="200px" width="200px"/>
             <Typography sx={{textAlign:'center'}}>{food.foodName}</Typography>
             <Button variant="contained" onClick={addToCartHandler}>Add to Cart</Button>
             </Box>

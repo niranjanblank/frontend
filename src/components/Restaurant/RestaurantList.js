@@ -1,19 +1,23 @@
 import { Container, Grid, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useEffect } from "react"
+import { useCookies } from "react-cookie"
 import { useDispatch, useSelector } from "react-redux"
-import { getAllFoodItemData, getAllRestaurantData, getAllReviewsData } from "../../store/asyncActions"
+import { getAllCartData, getAllFoodItemData, getAllRestaurantData, getAllReviewsData } from "../../store/asyncActions"
 import { fetchAllRestaurant } from "../../store/restaurantSlice"
 import SingleRestaurant from "./SingleRestaurant"
 
 const RestaurantList = () => {
 
     const dispatch = useDispatch()
+    const [cookies, setCookie] = useCookies(['user']);
+
     useEffect(()=> {
         // dispatch(fetchAllRestaurant())
         dispatch(getAllRestaurantData())
         dispatch(getAllFoodItemData())
         dispatch(getAllReviewsData())
+        dispatch(getAllCartData(cookies.email))
     },[])
     const restaurantData = useSelector(state=> state.restaurants.data)
    

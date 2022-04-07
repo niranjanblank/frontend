@@ -19,7 +19,7 @@ const FoodList = ({restaurant_id}) => {
                      </Box>
                      <Divider/>
                      <Box sx={{paddingLeft: '40px'}}>
-
+                        {foodDataCurrent.length===0 && 'No Food Items Available Yet'}
                         <Grid  container spacing={3} >
                            {foodDataCurrent.map(food=> (
                                <Grid key={`restro-${food.restaurant_id}-${food.id}`} item xs={6} md={4}>

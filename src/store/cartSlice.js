@@ -16,8 +16,9 @@ const cartSlice = createSlice({
             state.data.push(action.payload)
         },
         removeCartItem : (state,action)=> {
+            console.log('inside reducer',action.payload)
             state.data = state.data.filter(singleData=> singleData.id!==action.payload)
-           
+            
             // state.data = state.data.filter()
             // console.log(newData)
         }
