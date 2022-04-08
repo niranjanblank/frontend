@@ -28,7 +28,7 @@ export const getAllReviewsData = () => {
 export const getAllCartData = (email) => {
     return async dispatch => {
         const {data} = await axios.post('http://localhost:5000/api/cartitem/getCart',{email: email})
-       
-        dispatch(addAllCartItems(data))
+        console.log(data)
+        dispatch(addAllCartItems({data: data.data, id: data.id}))
     }
 }

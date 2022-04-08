@@ -1,13 +1,23 @@
 import { Box, Button, Typography } from "@mui/material"
-import { useDispatch } from "react-redux"
+import axios from "axios"
+import { useCookies } from "react-cookie"
+import { useDispatch, useSelector } from "react-redux"
 import { addSingleItemToCart } from "../../../store/cartSlice"
 
 const SingleFood = ({food}) => {
 
     const dispatch = useDispatch()
+    const [cookies, setCookie] = useCookies(['user']);
+    const cartId = useSelector(state=>state.cart.id)
 
-    const addToCartHandler = () => {
-        dispatch(addSingleItemToCart(food))
+   
+    
+    const addToCartHandler = async () => {
+
+        const data = await axios.post('http://localhost:5000/api/cartitem/',{foodItemId: food.id, cartId:cartId})
+        console.log(data)
+
+        dispatch(addSingleItemToCart(data.data))
     }
 
     return (

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    data: []
+    data: [],
+    id: 0
 }
 
 const cartSlice = createSlice({
@@ -11,9 +12,11 @@ const cartSlice = createSlice({
     reducers: {
         addAllCartItems : (state, action)=> {
             state.data = action.payload.data
+            state.id = action.payload.id
         },
         addSingleItemToCart : (state, action) => {
-            state.data.push(action.payload)
+            
+            state.data.push(action.payload.data)
         },
         removeCartItem : (state,action)=> {
             console.log('inside reducer',action.payload)
