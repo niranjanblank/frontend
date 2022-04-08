@@ -1,10 +1,10 @@
-import { Button, CssBaseline, Dialog, Divider, Drawer, Stack, TextField, Typography } from "@mui/material"
+import { Avatar, Button, CssBaseline, Dialog, Divider, Drawer, Rating, Stack, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {useNavigate, useParams, Link} from "react-router-dom"
 import { addSingleReview } from "../../store/reviewSlice";
@@ -17,10 +17,14 @@ const RestaurantDetails = () => {
     
     const [openDialog,setOpenDialog] = useState(false)
     const [menuSelector,setMenuSelector] = useState('reviews')
+    const restaurantData = useSelector(state => state.restaurants.data)
+
     const [reviewText, setReviewText] = useState('')
     const [cookies, setCookie] = useCookies(['user']);
     const dispatch = useDispatch()
     let params = useParams()
+    const currentRestaurant = restaurantData.filter(restaurant=> restaurant.id===parseInt(params.restaurantID))[0]
+
     let navigate = useNavigate()
     useEffect(()=> {
         if(cookies.isUserLoggedIn){
@@ -83,11 +87,16 @@ const RestaurantDetails = () => {
                 anchor="left"
             >
                 <Box sx={{display:'flex', flexDirection:'column',alignItems:'center', padding:'5px',justifyContent:'center',height:'100%'}}>
-                    <img src={process.env.PUBLIC_URL+'/assets'+'/restaurants/'+params.restaurantID+'.png'} width="200px" height="150px"/>
-                    <Box sx={{display:'flex',  flexDirection:'column',alignItems:'center'}}>
-                        <Typography>Some Restaurant</Typography>
-                        <Typography>Some Address</Typography>
-                        <Typography sx={{textAlign:'justify', padding:'10px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Typography>
+                    {/* <img src={process.env.PUBLIC_URL+'/assets'+'/restaurants/'+params.restaurantID+'.png'} width="200px" height="150px"/> */}
+                    <Avatar
+                        src={process.env.PUBLIC_URL+'/assets'+'/restaurants/'+params.restaurantID+'.png'}
+                        sx={{ width: '200px', height: '200px', border: '3px solid black' }}
+                    />
+                    <Box sx={{display:'flex',  flexDirection:'column',alignItems:'center', marginBottom:'10px'}}>
+                        <Typography><strong>{currentRestaurant.name}</strong></Typography>
+                        <Typography><strong>{currentRestaurant.address}</strong></Typography>
+                        <Rating value={currentRestaurant.rating} readOnly />
+                        <Typography sx={{textAlign:'justify', padding:'10px',paddingBottom:'0px'}}>{currentRestaurant.details}</Typography>
                     </Box>
                     <Button sx={{width:'100%', borderRadius:'0px'}} variant={(menuSelector==='food')?'contained':'outlined'} onClick={()=> {setMenuSelector('food')}} >Choose Food</Button>
                     <Button sx={{width:'100%', borderRadius:'0px'}} variant={(menuSelector==='reviews')?'contained':'outlined'} onClick={()=> {setMenuSelector('reviews')}}>See Reviews</Button>

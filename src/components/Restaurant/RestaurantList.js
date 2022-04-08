@@ -7,6 +7,7 @@ import { getAllCartData, getAllFoodItemData, getAllRestaurantData, getAllReviews
 import { fetchAllRestaurant } from "../../store/restaurantSlice"
 import SingleRestaurant from "./SingleRestaurant"
 import {useNavigate} from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 const RestaurantList = () => {
 
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const RestaurantList = () => {
    
     return (
         <Container sx={{paddingTop:'20px', marginTop:'60px'}}>
-            <Typography textAlign={"center"}>Choose Restaurant to order</Typography>
+            <Typography textAlign={"center"}><strong>Choose Restaurant to order</strong></Typography>
             
             <Grid container spacing={3} >
                {restaurantData.map((data,index)=>(
@@ -42,7 +43,7 @@ const RestaurantList = () => {
                ))}
             
             </Grid>
-            
+          
         </Container>
     )
 }

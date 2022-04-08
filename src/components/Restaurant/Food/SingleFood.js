@@ -3,7 +3,7 @@ import axios from "axios"
 import { useCookies } from "react-cookie"
 import { useDispatch, useSelector } from "react-redux"
 import { addSingleItemToCart } from "../../../store/cartSlice"
-
+import { toast } from "react-toastify"
 const SingleFood = ({food}) => {
 
     const dispatch = useDispatch()
@@ -13,11 +13,17 @@ const SingleFood = ({food}) => {
    
     
     const addToCartHandler = async () => {
+        try{
+            const data = await axios.post('http://localhost:5000/api/cartitem/',{foodItemId: food.id, cartId:cartId})
+            toast.success("Item added to cart")
+            dispatch(addSingleItemToCart(data.data))
+        }
+        catch(error){
+            toast.error("Item couldn't be added to cart")
+            console.log(error)
+        }
+        
 
-        const data = await axios.post('http://localhost:5000/api/cartitem/',{foodItemId: food.id, cartId:cartId})
-        console.log(data)
-
-        dispatch(addSingleItemToCart(data.data))
     }
 
     return (

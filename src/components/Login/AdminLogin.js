@@ -3,7 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import {Link, useNavigate} from "react-router-dom"
-
+import { toast } from "react-toastify"
 const { Box } = require("@mui/system")
 
 const AdminLogin = () => {
@@ -32,8 +32,11 @@ const AdminLogin = () => {
           const {data} = await axios.post('http://localhost:5000/api/admin/login',loginData)
           
           if(data.data===true){
-           
+            toast.success('Logged in Successfully')
               navigate("/adminDashboard")
+          }
+          else{
+              toast.error('Incorrect Credentials')
           }
         }
       }
@@ -47,12 +50,16 @@ const AdminLogin = () => {
         const {data} = await axios.post('http://localhost:5000/api/admin/login',loginData)
         
         if(data.data===true){
+            toast.success('Logged in Successfully')
             setCookie('adminEmail', email, { path: '/' });
             setCookie('adminPassword', password, { path: '/' });
             setCookie('isAdminLoggedIn', true, {path: '/'})
             navigate("/adminDashboard")
         }
-        console.log(data)
+        else{
+            toast.error('Incorrect Credentials')
+        }
+        
     }
 
     

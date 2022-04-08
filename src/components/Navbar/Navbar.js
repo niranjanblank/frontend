@@ -11,6 +11,7 @@ import {Link} from "react-router-dom"
 import { useCookies } from 'react-cookie';
 import { Dialog, Slide } from '@mui/material';
 import Cart from '../Cart/Cart';
+import { toast } from 'react-toastify';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -47,7 +48,7 @@ const Navbar = () => {
     const onLogoutHandler = () => {
 
         if(getCurrentParent()==='adminDashboard'){
-            
+            toast.info('Logged Out')
             removeCookie('adminEmail',{path: "/"})
             removeCookie('adminPassword',{path: "/"})
             removeCookie('isAdminLoggedIn',{path: "/"})
@@ -55,6 +56,7 @@ const Navbar = () => {
 
         }
         else{
+            toast.info('Logged Out')
             removeCookie('email',{path: "/"})
             removeCookie('password',{path: "/"})
             removeCookie('isUserLoggedIn',{path: "/"})
@@ -68,9 +70,14 @@ const Navbar = () => {
         {isLogged?( <> <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{zIndex:1400, backgroundColor:'black', height: '60px'}} > 
                 <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
-                    <Typography sx={{textDecoration: 'none', color:'white'}} variant="h6" component={Link} to="/restaurants">
+                   
+                    {
+                        (getCurrentParent()==='adminDashboard')?(<Typography sx={{textDecoration: 'none', color:'white'}} variant="h6" >
                         Foodie
-                    </Typography>
+                    </Typography>):(<Typography sx={{textDecoration: 'none', color:'white'}} variant="h6" component={Link} to="/restaurants">
+                        Foodie
+                    </Typography>)
+                    }
                     <Box>
                     {getCurrentParent()==='adminDashboard'?'':(<Button color="inherit" onClick={handleClickOpenCart}>Cart</Button>)}
 

@@ -15,7 +15,7 @@ import { Box, Card, Container, Paper, Stack } from '@mui/material';
 import { addAllCartItems, removeCartItem } from '../../store/cartSlice';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-
+import { toast } from 'react-toastify';
 const Cart = ({handleClose}) => {
 
     const cartData = useSelector(state=>state.cart.data)
@@ -35,24 +35,52 @@ const Cart = ({handleClose}) => {
           // do nothing
         }
         else{
-          const data = await axios.delete('http://localhost:5000/api/cartitem/emptyCart',{data:{cartId: cartId}})
-          dispatch(addAllCartItems({data: []}))
+          if(cartData.length>0){
+            try{
+              const data = await axios.delete('http://localhost:5000/api/cartitem/emptyCart',{data:{cartId: cartId}})
+              toast.info('Cart Emptied')
+              dispatch(addAllCartItems({data: []}))
+            }
+            catch(error){
+              toast.error('Cart couldn\'t be emptied')
+            }
+          }
+          else{
+            toast.error('Cart is already empty')
+          }
+          
         }
         
     }
 
     const removeCartItemHandler = async (id) => {
-       
-        const data = await axios.delete('http://localhost:5000/api/cartitem',{data:{cartItemId: id}})
-        console.log(data)
+        try{
+          const data = await axios.delete('http://localhost:5000/api/cartitem',{data:{cartItemId: id}})
+          toast.success('Item removed from cart')
+          dispatch(removeCartItem(id))
+        }
+        catch(error){
+          toast.error('Item couldnt be removed from cart')
+        }
 
-        dispatch(removeCartItem(id))
     }
 
     const onSubmitHandler = async () => {
       const date = new Date()
-      const data = await axios.post('http://localhost:5000/api/order',{data: cartData, email: cookies.email, orderTime: date.toISOString()})
-      console.log(data)
+      if(cartData.length>0){
+        try{
+          const data = await axios.post('http://localhost:5000/api/order',{data: cartData, email: cookies.email, orderTime: date.toISOString()})
+          toast.success('Order Placed')
+        }
+        catch(error){
+          toast.error('Order couldn\'t be placed')
+        }
+      }
+      else{
+        toast.error('Cart is empty')
+      }
+     
+   
     }
 
     return (

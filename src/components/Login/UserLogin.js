@@ -3,6 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import {Link, useNavigate} from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify"
 
 const { Box } = require("@mui/system")
 
@@ -32,8 +33,11 @@ const UserLogin = () => {
           const {data} = await axios.post('http://localhost:5000/api/user/login',loginData)
           
           if(data.data===true){
-           
+            toast.success("Login Successful")
               navigate("/restaurants")
+          }
+          else{
+              toast.error("Incorrect Credentials")
           }
         }
       }
@@ -52,17 +56,26 @@ const UserLogin = () => {
         const {data} = await axios.post('http://localhost:5000/api/user/login',loginData)
         
         if(data.data===true){
+            toast.success("Login Successful")
             setCookie('email', email, { path: '/' });
             setCookie('password', password, { path: '/' });
             setCookie('isUserLoggedIn',true, { path: '/' })
             navigate("/restaurants")
+        }
+       
+        else{
+            toast.error("Incorrect Credentials",)
         }
         console.log(data)
     }
 
     
     return (
+        <>
+        
         <Box sx={{height:'100vh', width:'100vw',display:'flex',alignItems:'center',justifyContent:'center'}}>
+           
+
             <Stack spacing={2} sx={{width:'400px'}} >
                 <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                  <img src={process.env.PUBLIC_URL+'/assets/Logo.png'} width="200px" height="200px"/>
@@ -76,6 +89,8 @@ const UserLogin = () => {
 
             </Stack>
         </Box>
+        
+        </>
     )
 }
 

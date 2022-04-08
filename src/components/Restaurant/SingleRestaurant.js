@@ -1,10 +1,10 @@
-import { Avatar, Box, Typography } from "@mui/material"
+import { Avatar, Box, Paper, Typography } from "@mui/material"
 import {Link} from "react-router-dom"
 const SingleRestaurant = ({data}) => {
     return (
        <>   
-         <Box sx={{display:"flex",flexDirection:'column'
-        ,width:"150px",
+
+         <Box sx={{display:"flex",flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
         margin: '10px',
@@ -19,8 +19,9 @@ const SingleRestaurant = ({data}) => {
                 src={data.image}
                 sx={{ width: '200px', height: '200px', border: '3px solid black' }}
             />
-            <Typography sx={{textAlign:'center', color:'black'}}>{data.name}</Typography>
+            <Typography sx={{textAlign:'center', color:'black'}}><strong>{data.name}</strong></Typography>
             </Box>
+
         </>
     )
 }

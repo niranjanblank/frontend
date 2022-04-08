@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import { addSingleFoodItem } from "../../store/foodItemSlice"
 import {useNavigate} from "react-router-dom"
 import { useCookies } from "react-cookie"
+import { toast } from "react-toastify"
 const AdminAddFoodItem = () => {
 
     const [cookies,setCookies] = useCookies(['user'])
@@ -63,7 +64,7 @@ const AdminAddFoodItem = () => {
                 data: newFormData,
                 headers: { "Content-Type": "multipart/form-data" },
               })
-            
+            toast.success('Food Item Added Successfully')
             dispatch(addSingleFoodItem(data.data))
         }
         catch(error){
