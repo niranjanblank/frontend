@@ -1,14 +1,26 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useCookies } from "react-cookie";
+import {useNavigate} from "react-router-dom"
 const AdminFoodItems = () => {
    
+    const [cookies,setCookies] = useCookies(['user']) 
     const foodData = useSelector(state=>state.foodItems.data)
     const restaurantData = useSelector(state=>state.restaurants.data)
     const [selectedRestaurant,setSelectedRestaurant] = useState('')
     const currentFoodData = foodData.filter(food=>food.restaurant_id===selectedRestaurant)
+    let navigate = useNavigate();
 
+    useEffect(()=> {
+        if(cookies.isAdminLoggedIn){
+            //do nothing
+        }
+        else{
+            navigate('/adminLogin')
+        }
+        },[])
 
 
 
@@ -50,7 +62,7 @@ const AdminFoodItems = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                    {fooditem.foodPrice}
+                    Price: {fooditem.foodPrice}
                     </Typography>
                 </AccordionDetails>
                 </Accordion>

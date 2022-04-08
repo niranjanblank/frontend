@@ -3,12 +3,25 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {getFormattedDate} from "../../helperFunctions"
+import { useCookies } from "react-cookie";
+import {useNavigate} from "react-router-dom"
+import { useEffect } from "react";
 const AdminReviews = () => {
     const reviewData = useSelector(state=>state.reviews.data)
     const restaurantData = useSelector(state=>state.restaurants.data)
     const [selectedRestaurant,setSelectedRestaurant] = useState('')
     const currentReviewData = reviewData.filter(review=>review.restaurant_id===selectedRestaurant)
+    const [cookies,setCookies] = useCookies(['user'])
+    let navigate = useNavigate();
 
+    useEffect(()=> {
+        if(cookies.isAdminLoggedIn){
+            //do nothing
+        }
+        else{
+            navigate('/adminLogin')
+        }
+    },[])
 
 
 

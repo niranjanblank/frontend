@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 
-import {useParams, Link} from "react-router-dom"
+import {useNavigate, useParams, Link} from "react-router-dom"
 import { addSingleReview } from "../../store/reviewSlice";
 import FoodList from "./Food/FoodList";
 import ReviewList from "./Review/ReviewList";
+
 const RestaurantDetails = () => {
 
  
@@ -20,6 +21,16 @@ const RestaurantDetails = () => {
     const [cookies, setCookie] = useCookies(['user']);
     const dispatch = useDispatch()
     let params = useParams()
+    let navigate = useNavigate()
+    useEffect(()=> {
+        if(cookies.isUserLoggedIn){
+            // do nothing
+        }
+        else{
+            navigate("/")
+        }
+    }, [])
+
 
     const dialogHandler= () => {
         setOpenDialog(!openDialog)

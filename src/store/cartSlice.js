@@ -14,8 +14,7 @@ const cartSlice = createSlice({
             state.data = action.payload.data
             state.id = action.payload.id
         },
-        addSingleItemToCart : (state, action) => {
-            
+        addSingleItemToCart : (state, action) => {         
             state.data.push(action.payload.data)
         },
         removeCartItem : (state,action)=> {

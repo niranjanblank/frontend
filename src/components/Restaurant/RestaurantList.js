@@ -6,11 +6,20 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAllCartData, getAllFoodItemData, getAllRestaurantData, getAllReviewsData } from "../../store/asyncActions"
 import { fetchAllRestaurant } from "../../store/restaurantSlice"
 import SingleRestaurant from "./SingleRestaurant"
-
+import {useNavigate} from "react-router-dom"
 const RestaurantList = () => {
 
     const dispatch = useDispatch()
     const [cookies, setCookie] = useCookies(['user']);
+    let navigate = useNavigate()
+    useEffect(()=> {
+        if(cookies.isUserLoggedIn){
+            // do nothing
+        }
+        else{
+            navigate("/")
+        }
+    }, [])
 
     useEffect(()=> {
         // dispatch(fetchAllRestaurant())

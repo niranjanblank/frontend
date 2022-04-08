@@ -33,19 +33,36 @@ const Navbar = () => {
     let navigate= useNavigate()
     React.useEffect(()=>{
         
-        if(location.pathname=="/" || location.pathname=="/signup"){
+        if(location.pathname=="/" || location.pathname=="/signup" || location.pathname=="/adminLogin" ){
             setIsLogged(false)
         }
         else(
             setIsLogged(true)
         )
     },[location])
+    const getCurrentParent = () => {
+        let parent = location.pathname.split('/')[1]
+        return parent}
     
     const onLogoutHandler = () => {
-        removeCookie('email',{path: "/"})
-        removeCookie('password',{path: "/"})
-        navigate("/")
+
+        if(getCurrentParent()==='adminDashboard'){
+            
+            removeCookie('adminEmail',{path: "/"})
+            removeCookie('adminPassword',{path: "/"})
+            removeCookie('isAdminLoggedIn',{path: "/"})
+            navigate("/adminLogin")
+
+        }
+        else{
+            removeCookie('email',{path: "/"})
+            removeCookie('password',{path: "/"})
+            removeCookie('isUserLoggedIn',{path: "/"})
+            navigate("/")
+        }
+        
     }
+ 
     return (
         <>
         {isLogged?( <> <Box sx={{ flexGrow: 1 }}>
@@ -55,7 +72,7 @@ const Navbar = () => {
                         Foodie
                     </Typography>
                     <Box>
-                    <Button color="inherit" onClick={handleClickOpenCart}>Cart</Button>
+                    {getCurrentParent()==='adminDashboard'?'':(<Button color="inherit" onClick={handleClickOpenCart}>Cart</Button>)}
 
                     <Button color="inherit" onClick={onLogoutHandler}>Log Out</Button>
 

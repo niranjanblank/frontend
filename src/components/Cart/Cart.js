@@ -14,12 +14,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Card, Container, Paper, Stack } from '@mui/material';
 import { addAllCartItems, removeCartItem } from '../../store/cartSlice';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const Cart = ({handleClose}) => {
 
     const cartData = useSelector(state=>state.cart.data)
     const foodItems = useSelector(state=>state.foodItems.data)
     const [cartId,setCartId] = React.useState(null)
+    const [cookies, setCookie] = useCookies(['user']);
     const cartFoodData = cartData.map(cartitem => {
       if(cartId===null){
         setCartId(cartitem.cart_id)
@@ -40,11 +42,17 @@ const Cart = ({handleClose}) => {
     }
 
     const removeCartItemHandler = async (id) => {
-
+       
         const data = await axios.delete('http://localhost:5000/api/cartitem',{data:{cartItemId: id}})
         console.log(data)
 
         dispatch(removeCartItem(id))
+    }
+
+    const onSubmitHandler = async () => {
+      const date = new Date()
+      const data = await axios.post('http://localhost:5000/api/order',{data: cartData, email: cookies.email, orderTime: date.toISOString()})
+      console.log(data)
     }
 
     return (
@@ -66,7 +74,7 @@ const Cart = ({handleClose}) => {
             <Button autoFocus color="inherit" onClick={onCartEmptyHandler}>
               Empty Cart
             </Button>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="inherit" onClick={onSubmitHandler}>
               Order
             </Button>
           </Toolbar>

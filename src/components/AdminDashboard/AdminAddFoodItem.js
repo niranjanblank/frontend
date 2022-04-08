@@ -1,16 +1,33 @@
 import { Button, FormControl, Input, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { addSingleFoodItem } from "../../store/foodItemSlice"
+import {useNavigate} from "react-router-dom"
+import { useCookies } from "react-cookie"
 const AdminAddFoodItem = () => {
+
+    const [cookies,setCookies] = useCookies(['user'])
     const restaurantData = useSelector(state=>state.restaurants.data)
     const [selectedRestaurant,setSelectedRestaurant] = useState('')
     const [foodName,setFoodName] = useState('')
     const [foodPrice,setFoodPrice] = useState('')
     const [imageFile,setImageFile] = useState(null)
     const dispatch = useDispatch()
+    let navigate = useNavigate();
+
+    useEffect(()=> {
+        if(cookies.isAdminLoggedIn){
+            //do nothing
+        }
+        else{
+            navigate('/adminLogin')
+        }
+    },[])
+
+
+
     const handleRestaurantChange = (event) => {
         setSelectedRestaurant(event.target.value)
     }

@@ -39,6 +39,11 @@ const UserLogin = () => {
       }
        login()
     },[])
+    useEffect(()=> {
+        if(cookies.isUserLoggedIn){
+            navigate("/restaurants")
+        }
+    },[cookies.isUserLoggedIn])
     const onLoginHandler = async () => {
         const loginData = {
             email: email,
@@ -49,6 +54,7 @@ const UserLogin = () => {
         if(data.data===true){
             setCookie('email', email, { path: '/' });
             setCookie('password', password, { path: '/' });
+            setCookie('isUserLoggedIn',true, { path: '/' })
             navigate("/restaurants")
         }
         console.log(data)

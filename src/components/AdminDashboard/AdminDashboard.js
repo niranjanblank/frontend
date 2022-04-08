@@ -1,17 +1,33 @@
 import { AppBar, Box, CssBaseline, Divider, Drawer, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
 import { useEffect } from "react"
+import { useCookies } from "react-cookie"
 import { useDispatch, useSelector } from "react-redux"
-import { Link,Outlet } from "react-router-dom"
-import { getAllFoodItemData, getAllRestaurantData, getAllReviewsData } from "../../store/asyncActions"
+import { Link,Outlet, useNavigate } from "react-router-dom"
+import { getAllFoodItemData, getAllOrderData, getAllRestaurantData, getAllReviewsData, getAllUsersData } from "../../store/asyncActions"
 
 const drawerWidth = 240
 const AdminDashboard = () => {
     const dispatch = useDispatch()
+    const [cookies,setCookies] = useCookies(['user'])
+    let navigate = useNavigate();
+
+    useEffect(()=> {
+        if(cookies.isAdminLoggedIn){
+            //do nothing
+        }
+        else{
+            navigate('/adminLogin')
+        }
+    },[])
     useEffect(()=> {
       dispatch(getAllRestaurantData())
       dispatch(getAllFoodItemData())
       dispatch(getAllReviewsData())
+      dispatch(getAllOrderData())
+      dispatch(getAllUsersData())
     },[])
+
+   
 
     return (
             <Box sx={{ display: 'flex'}}>
@@ -50,6 +66,9 @@ const AdminDashboard = () => {
                     </ListItem>
                     <ListItem button  component={Link} to="/adminDashboard/reviews">
                       <ListItemText primary="Reviews" />
+                    </ListItem>
+                    <ListItem button  component={Link} to="/adminDashboard/orders">
+                      <ListItemText primary="Orders" />
                     </ListItem>
 
               
