@@ -1,7 +1,7 @@
-import { Button, Stack, TextField, Typography } from "@mui/material"
+import { Button, Stack, TextField, Box,  Typography } from "@mui/material"
 import { useState } from "react"
 import axios from "axios"
-const { Box } = require("@mui/system")
+import { ToastContainer, toast } from "react-toastify"
 
 const SignUp = () => {
     const [firstName,setFirstName] = useState('')
@@ -31,8 +31,14 @@ const SignUp = () => {
             lastName: lastName, 
             firstName: firstName
         }
-        const userData =  await axios.post('http://localhost:5000/api/user/signup',signUpData)
-        console.log('sign up', userData)
+        try{
+            const userData =  await axios.post('http://localhost:5000/api/user/signup',signUpData)
+            console.log('sign up', userData)
+            toast.success('Account Registered')
+        }
+        catch(error){
+            toast.error('Account counldnt be created')
+        }
     }
 
     return (
